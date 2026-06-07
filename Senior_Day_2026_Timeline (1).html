@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Senior Day 2026 — التايم لاين</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg1:#e8f0fb; --bg2:#d3e2f6; --bg3:#c2d6f0;
+    --ink:#1c3a63; --ink-soft:#4a6391;
+    --navy:#15335e; --muted:#6d83a6;
+    --blue:#2f6fcf; --blue-deep:#1d52a8; --blue-bright:#3b82e6;
+    --card:#f7faff; --card-edge:#ffffff;
+    --pill:#eaf1fc; --line:#9bb8e2;
+    --shadow:0 18px 40px -22px rgba(28,58,99,.45);
+    --shadow-sm:0 8px 22px -14px rgba(28,58,99,.4);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Cairo',sans-serif;
+    color:var(--navy);
+    background:
+      radial-gradient(1200px 700px at 80% -10%, #f1f6fe 0%, transparent 55%),
+      radial-gradient(900px 600px at 5% 110%, #cfe0f7 0%, transparent 50%),
+      linear-gradient(160deg,var(--bg1) 0%,var(--bg2) 48%,var(--bg3) 100%);
+    min-height:100vh;
+    padding:40px 20px 70px;
+    position:relative;
+    overflow-x:hidden;
+  }
+  /* tech grid + circuit overlay */
+  body::before{
+    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5;
+    background-image:
+      radial-gradient(rgba(47,111,207,.16) 1.3px, transparent 1.4px);
+    background-size:34px 34px;
+    -webkit-mask-image:linear-gradient(180deg,#000 0%,transparent 70%);
+    mask-image:linear-gradient(180deg,#000 0%,transparent 70%);
+  }
+  .circuit{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.45}
+  .wrap{max-width:1180px;margin:0 auto;position:relative;z-index:2}
+
+  /* ---- top bar ---- */
+  .topbar{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px}
+  .qr{display:flex;flex-direction:column;align-items:center;gap:8px}
+  .qr .box{width:96px;height:96px;border-radius:18px;background:#fff;display:flex;align-items:center;justify-content:center;
+    box-shadow:var(--shadow-sm);padding:11px}
+  .qr .box svg{width:100%;height:100%}
+  .qr span{font-size:12px;font-weight:700;letter-spacing:2px;color:var(--blue-deep)}
+  .logo{font-weight:900;color:var(--blue-deep);font-size:15px;letter-spacing:3px;text-align:center;line-height:1}
+  .logo .mark{font-size:46px;letter-spacing:-2px;display:block;transform:scaleY(1.05)}
+
+  /* ---- hero ---- */
+  .hero{text-align:center;margin:6px auto 6px;max-width:840px}
+  .badge{display:inline-flex;align-items:center;gap:9px;background:#fff;border:1px solid #e2ecfb;
+    border-radius:999px;padding:11px 22px;box-shadow:var(--shadow-sm);
+    font-weight:800;letter-spacing:3px;color:var(--blue-deep);font-size:14px;direction:ltr}
+  h1{font-size:clamp(38px,6vw,72px);font-weight:900;line-height:1.12;margin:26px 0 8px;letter-spacing:-1px}
+  h1 .accent{color:var(--blue)}
+  .sub{color:var(--muted);font-weight:600;font-size:clamp(15px,2vw,19px)}
+  .divider{display:flex;align-items:center;justify-content:center;gap:14px;margin:24px 0 30px}
+  .divider .ln{height:3px;width:120px;border-radius:3px;background:linear-gradient(90deg,transparent,var(--line))}
+  .divider .ln.r{background:linear-gradient(90deg,var(--line),transparent)}
+  .divider .dot{width:13px;height:13px;background:var(--blue);transform:rotate(45deg);border-radius:3px;
+    box-shadow:0 0 0 5px rgba(47,111,207,.16)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-bottom:48px}
+  .chip{display:inline-flex;align-items:center;gap:10px;background:#fff;border-radius:999px;
+    padding:13px 22px;font-weight:700;font-size:15px;box-shadow:var(--shadow-sm);color:var(--navy)}
+  .chip svg{width:18px;height:18px;flex:none}
+
+  /* ---- timeline ---- */
+  .timeline{position:relative;padding-inline-start:46px}
+  .rail{position:absolute;inset-inline-start:18px;top:14px;bottom:14px;width:3px;
+    background:linear-gradient(180deg,var(--blue) 0%, #a9c4ec 100%);border-radius:3px}
+  .item{position:relative;margin-bottom:22px;opacity:0;transform:translateY(18px);
+    animation:rise .6s cubic-bezier(.2,.7,.3,1) forwards}
+  .node{position:absolute;inset-inline-start:-36px;top:30px;width:20px;height:20px;border-radius:50%;
+    background:#fff;border:4px solid var(--blue);box-shadow:0 0 0 5px rgba(47,111,207,.14);z-index:3}
+
+  .card{display:flex;align-items:stretch;gap:16px;background:var(--card);
+    border:1px solid #ffffff;border-radius:22px;padding:20px 22px;box-shadow:var(--shadow);
+    transition:transform .25s ease, box-shadow .25s ease}
+  .card:hover{transform:translateY(-3px);box-shadow:0 26px 50px -24px rgba(28,58,99,.55)}
+  .icon{flex:none;width:62px;height:62px;border-radius:16px;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(150deg,#dcebff,#cfe0fb);color:var(--blue-deep);align-self:center;
+    box-shadow:inset 0 0 0 1px #e2ecfb}
+  .icon svg{width:30px;height:30px}
+  .body{flex:1;text-align:start}
+  .time{font-weight:800;color:var(--muted);font-size:13.5px;letter-spacing:.5px;direction:ltr;margin-bottom:5px}
+  .title{font-weight:900;font-size:21px;color:var(--navy);line-height:1.3}
+  .person{color:var(--blue-deep);font-weight:700;font-size:14.5px;margin-top:3px}
+  .desc{color:var(--muted);font-weight:500;font-size:14px;line-height:1.7;margin-top:8px}
+  .dur{flex:none;align-self:center;background:var(--pill);color:var(--blue-deep);font-weight:800;font-size:13.5px;
+    padding:9px 16px;border-radius:999px;white-space:nowrap;border:1px solid #e0ebfa}
+
+  /* highlighted hero card (the challenge) */
+  .item.star .card{background:linear-gradient(160deg,#2f6fcf 0%, #1d52a8 100%);border:none;color:#fff;
+    box-shadow:0 28px 55px -22px rgba(29,82,168,.7)}
+  .item.star .title,.item.star .desc,.item.star .time{color:#fff}
+  .item.star .time{opacity:.85}
+  .item.star .icon{background:rgba(255,255,255,.18);color:#fff;box-shadow:inset 0 0 0 1px rgba(255,255,255,.25)}
+  .item.star .dur{background:rgba(255,255,255,.2);color:#fff;border-color:rgba(255,255,255,.3)}
+  .item.star .node{border-color:#1d52a8}
+  .rounds{margin-top:12px;display:grid;gap:8px}
+  .round{display:flex;gap:9px;align-items:flex-start;font-size:13.5px;font-weight:500;line-height:1.6;color:#eaf2ff}
+  .round b{color:#fff;font-weight:800}
+  .round .rb{flex:none;width:8px;height:8px;border-radius:50%;background:#9ec5ff;margin-top:7px}
+
+  /* optional card */
+  .item.opt .card{background:#eef4fd;border:1px dashed #aac3ec}
+  .item.opt .dur{background:#dfeafb}
+
+  .foot{text-align:center;margin-top:38px;color:var(--blue-deep);font-weight:800;font-size:15px;
+    background:#fff;display:inline-block;padding:14px 26px;border-radius:999px;box-shadow:var(--shadow-sm)}
+  .footwrap{text-align:center}
+
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media(max-width:620px){
+    .card{flex-direction:column;gap:12px}
+    .icon{align-self:flex-start}
+    .dur{align-self:flex-start}
+    .topbar .qr .box{width:78px;height:78px}
+    h1{font-size:38px}
+  }
+</style>
+</head>
+<body>
+<svg class="circuit" preserveAspectRatio="none" viewBox="0 0 1440 900">
+  <g fill="none" stroke="#2f6fcf" stroke-width="1.4" opacity="0.5">
+    <path d="M0,120 H180 L240,180 H420"/>
+    <path d="M1440,160 H1180 L1120,220 H940"/>
+    <path d="M0,760 H160 L220,700 H360"/>
+    <path d="M1440,720 H1240 L1180,660 H1020"/>
+    <circle cx="420" cy="180" r="5" fill="#2f6fcf" stroke="none"/>
+    <circle cx="940" cy="220" r="5" fill="#2f6fcf" stroke="none"/>
+    <circle cx="360" cy="700" r="5" fill="#2f6fcf" stroke="none"/>
+    <circle cx="1020" cy="660" r="5" fill="#2f6fcf" stroke="none"/>
+  </g>
+</svg>
+
+<div class="wrap">
+
+  <div class="topbar">
+    <div></div>
+    <div class="logo" style="visibility:hidden"></div>
+  </div>
+
+  <div class="hero">
+    <div class="badge">SENIOR DAY · IT CLUB 🎓</div>
+    <h1>يوم <span class="accent">الخريجين</span> Senior Day</h1>
+    <p class="sub">الفعاليات والأنشطة</p>
+
+    <div class="divider"><span class="ln"></span><span class="dot"></span><span class="ln r"></span></div>
+
+    <div class="chips">
+      <div class="chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#2f6fcf" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="3"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>
+        يوم الخميس - 11/6/2026
+      </div>
+      <div class="chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#2f6fcf" stroke-width="2"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/></svg>
+        12:30 — 1:30 ظهراً
+      </div>
+      <div class="chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#e0564f" stroke-width="2"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+        كلية تكنولوجيا المعلومات 101
+      </div>
+    </div>
+  </div>
+
+  <div class="timeline">
+    <div class="rail"></div>
+
+    <!-- 1 -->
+    <div class="item" style="animation-delay:.05s">
+      <div class="node"></div>
+      <div class="card">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v4M8 22h8"/></svg></div>
+        <div class="body">
+          <div class="time">12:30 — 12:35 م</div>
+          <div class="title">افتتاح رئيس النادي</div>
+          <div class="desc">ترحيب بالحضور والدخول بالموضوع، وتعريف سريع بالضيوف لبناء الفضول، ثم تسليم الكلمة للعميد.</div>
+        </div>
+        <div class="dur">5 دقائق</div>
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="item" style="animation-delay:.15s">
+      <div class="node"></div>
+      <div class="card">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V8l7-4 7 4v13M9 21v-5h6v5"/></svg></div>
+        <div class="body">
+          <div class="time">12:35 — 12:40 م</div>
+          <div class="title">كلمة العميد</div>
+          <div class="desc">كلمة دافئة عن الفخر بطلاب Senior على عتبة التخرّج، وتحفيزهم لدخول سوق العمل.</div>
+        </div>
+        <div class="dur">5 دقائق</div>
+      </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="item" style="animation-delay:.25s">
+      <div class="node"></div>
+      <div class="card">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3.2"/><circle cx="17" cy="9" r="2.6"/><path d="M3 20c0-3.3 2.7-5 6-5s6 1.7 6 5M15 20c0-2.4 1.5-3.6 3.5-3.6S22 17.6 22 20"/></svg></div>
+        <div class="body">
+          <div class="time">12:40 — 12:45 م</div>
+          <div class="title">تعريف الضيوف بأنفسهم</div>
+          <div class="person">محمد سباعنة (Foothill) · فريدة أبو محسن (HR — ASAL)</div>
+          <div class="desc">دقيقتان لكل ضيف: من هم، طبيعة عملهم، ووعد للجمهور: «رح نوريكم كيف بنفكّر كموظفي توظيف».</div>
+        </div>
+        <div class="dur">5 دقائق</div>
+      </div>
+    </div>
+
+    <!-- 4 — STAR -->
+    <div class="item star" style="animation-delay:.35s">
+      <div class="node"></div>
+      <div class="card">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.8 6.2 6.2.5-4.7 4.1 1.4 6.2L12 16.8 6.3 19l1.4-6.2L3 8.7l6.2-.5z"/></svg></div>
+        <div class="body">
+          <div class="time">12:45 — 1:18 م</div>
+          <div class="title">The Hiring Challenge — قلب اليوم</div>
+          <div class="rounds">
+            <div class="round"><span class="rb"></span><span><b>الجولة 1 · فرز السير الذاتية (~7 د):</b> عرض 3–4 سير، كل ضيف يختار من يكمل ولماذا، والجمهور يصوّت.</span></div>
+            <div class="round"><span class="rb"></span><span><b>الجولة 2 · المقابلة الحيّة (~9 د):</b> متطوّع يصبح المتقدّم، ومقابلة 3–5 د ثم شرح الملاحظات.</span></div>
+            <div class="round"><span class="rb"></span><span><b>الجولة 3 · القرار النهائي (~8 د):</b> ملفات مرشحين مختلفين ومن يُوظَّف ولماذا.</span></div>
+            <div class="round"><span class="rb"></span><span><b>الجولة 4 · أسرار من وراء الكواليس (~8 د):</b> أصعب موقف، أكثر خطأ للخريجين، ونصيحة ذهبية.</span></div>
+          </div>
+        </div>
+        <div class="dur">33 دقيقة</div>
+      </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="item" style="animation-delay:.45s">
+      <div class="node"></div>
+      <div class="card">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.5 9a2.5 2.5 0 1 1 3.4 2.3c-.7.3-1.4.9-1.4 1.9v.5"/><circle cx="11.5" cy="17" r="1"/><circle cx="12" cy="12" r="9.5"/></svg></div>
+        <div class="body">
+          <div class="time">1:18 — 1:27 م</div>
+          <div class="title">أسئلة الجمهور</div>
+          <div class="desc">المايك يُفتح للطلاب ليسألوا الضيوف عن التوظيف وسوق العمل — تفاعل ثمين لطلاب على وشك التخرّج.</div>
+        </div>
+        <div class="dur">9 دقائق</div>
+      </div>
+    </div>
+
+    <!-- 6 — OPTIONAL -->
+    <div class="item opt" style="animation-delay:.65s">
+      <div class="node"></div>
+      <div class="card">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2.5"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M6 14h12"/></svg></div>
+        <div class="body">
+          <div class="time">بعد الختام — لمن يرغب</div>
+          <div class="title">مسابقة Typing (اختيارية)</div>
+          <div class="desc">سباق سرعة كتابة بين 3–4 متطوّعين على الشاشة، والأسرع يأخذ جائزة بسيطة. تُقام فقط إن بقي وقت ورغبة — لا تضغط على التايم لاين.</div>
+        </div>
+        <div class="dur">اختيارية</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footwrap">
+    <div class="foot">المجموع: ساعة واحدة بالضبط · 12:30 — 1:30 ظهراً</div>
+  </div>
+
+</div>
+</body>
+</html>
